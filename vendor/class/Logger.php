@@ -6,7 +6,7 @@ class Logger extends Facade
 
     protected function init(...$argv)
     {
-
+        // TODO: Implement init() method.
     }
 
     public function getStack()

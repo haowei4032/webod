@@ -4,7 +4,7 @@ class Cookie extends Facade
 {
 	private $queue = [];
 
-	protected function init()
+	protected function init(...$argv)
     {
         // TODO: Implement init() method.
     }
