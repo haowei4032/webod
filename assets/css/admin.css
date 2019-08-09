@@ -1,0 +1,157 @@
+a,input,textarea,select,button,h1,h2,h3,h4,h5,h6,p,ul,li{
+    border: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    background: #f0f0f0;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.page-wrapper .left-side {
+    width: 210px;
+    background: #222;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.page-wrapper .main-side {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    z-index: 100;
+}
+
+.left-side .menu-list {
+    overflow: hidden;
+    margin: 5px 0;
+}
+
+.left-side .menu-list li {
+    display: block;
+    margin: 8px 0;
+}
+
+.left-side .menu-list li a {
+    color: rgba(255,255,255,.7);
+    line-height: 42px;
+    height: 42px;
+    display: block;
+    padding: 0 15px;
+    font-size: 14px;
+    box-sizing: border-box;
+    border-left: solid 3px transparent;
+}
+
+.left-side .menu-list li a icon {
+    font-family: "iconfont" !important;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.left-side .menu-list li a icon.icon-apps {
+    color: #0a0;
+}
+
+.left-side .menu-list li a.active {
+    background: #09e;
+}
+
+.left-side .menu-list li a.active, .left-side .menu-list li a:hover {
+    border-color: #09e;
+    color: #fff;
+}
+
+.main-side .main-side-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.main-side .main-side-header {
+    background: #fff;
+    width: 100%;
+    height: 50px;
+    box-shadow: 0 2px 6px rgba(215, 219, 222, 0.35);
+    position: relative;
+}
+
+.main-side .main-side-page {
+    width: 100%;
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.main-side .container {
+    margin: 15px;
+}
+
+.main-side .container .block-child {
+    background: #fff;
+    padding: 15px;
+}
+
+.main-side .container .block-child h3 {
+    font-size: 14px;
+    font-weight: normal;
+    border-left: solid 3px #09e;
+    padding-left: 8px;
+    line-height: 18px;
+    height: 18px;
+}
+
+.main-side .sub-container {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+}
+
+.main-side .sub-container .sub-left {
+    width: 120px;
+    background: #fff;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.main-side .sub-container .sub-left h3 {
+    font-size: 15px;
+    line-height: 60px;
+    height: 60px;
+    padding-left: 20px;
+}
+
+.main-side .sub-container .sub-left .sub-menu-list li a {
+    font-size: 14px;
+    line-height: 38px;
+    height: 38px;
+    padding-left: 20px;
+    color: #333;
+}
+
+.main-side .sub-container .sub-left .sub-menu-list li a.active {
+    background: #f0f0f0;
+}

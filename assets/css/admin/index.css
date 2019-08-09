@@ -1,0 +1,17 @@
+.container {
+    margin: 15px;
+}
+
+.container .block-child {
+    background: #fff;
+    padding: 15px;
+}
+
+.container .block-child h3 {
+    font-size: 14px;
+    font-weight: normal;
+    border-left: solid 3px #09e;
+    padding-left: 8px;
+    line-height: 18px;
+    height: 18px;
+}

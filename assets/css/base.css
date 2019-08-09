@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+/*@font-face
+{
+    font-family: HanWangCM03;
+    src: url('statics/css/HanWangCM03.ttf'),
+    url('statics/css/HanWangCM03.otf'),
+    url('statics/css/HanWangCM03.woff');
+}
+*/
+
+html {
+    background: #f0f0f0;
+}
+
+.header-wrapper {
+    height: 60px;
+    background: #209cee;
+    color: #f5f5f5;
+    font-size: 15px;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 999;
+}
+
+.header-wrapper .left-side {
+    float: left;
+}
+
+.header-wrapper .left-side a.logo {
+    height: 50px;
+    margin: 5px 15px 5px 0;
+    width: 130px;
+    background: url(../img/logo_white.png) left center no-repeat;
+    display: block;
+    float: left;
+}
+
+.header-wrapper ul.menu-list {
+    float: left;
+}
+
+.header-wrapper ul.menu-list li {
+    float: left;
+    display: block;
+    margin-right: 15px;
+}
+
+
+.header-wrapper ul.menu-list li:lastc-child {
+    margin: 0;
+}
+
+.header-wrapper ul.menu-list li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    display: block;
+    line-height: 60px;
+    padding: 0 10px;
+    text-align: center;
+    border-bottom: solid 3px transparent;
+    box-sizing: border-box;
+    height: 60px;
+    font-size: 15px;
+}
+
+.header-wrapper ul.menu-list li a.current, .header-wrapper ul.menu-list li a:hover {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+.header-wrapper .right-side {
+    float: right;
+}
+
+.header-wrapper .right-side ul.menu-list li a,.header-wrapper .right-side ul.menu-list li a:hover {
+    border: 0;
+}
+
+.header-wrapper form {
+    float: left;
+    margin: 14px;
+}
+
+.header-wrapper form input {
+    /*width: 50px;*/
+    border: 0;
+    height: 32px;
+    line-height: 32px;
+    background: rgba(255,255,255, 1);
+    transition: background .3s ease, width .3s ease;
+}
+
+.header-wrapper form input:focus {
+    /*width: 200px;*/
+    background: rgba(255,255,255, 1);
+}
+
+
+:root {
+    font-family: 'Microsoft YaHei', arial;
+}
+
+.block-child {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+a, p, img, ul, li, input, button, select, textarea, html, body {
+	list-style: none;
+	outline: none;
+	margin: 0;
+	padding: 0;
+    text-decoration: none;
+}
+
+.clear-fix::after {
+	content: "";
+	display: block;
+	width: 0;
+	height: 0;
+    clear: both;
+}
+
+input::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+input {
+    border: solid 1px #e0e0e0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 10px;
+    border-radius: 4px;
+    transition: border-color 0.5s ease;
+}
+
+input:hover {
+    border-color: #ccc;
+}
+
+input:focus {
+    border-color: #409EFF;
+}
+
+button {
+    background: white;
+    color: #666;
+    font-size: 14px;
+    height: 40px;
+    padding: 10px 20px;
+    line-height: 1;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: solid 1px #dcdfe6;
+}
+
+button.button-primary {
+    background: #409EFF;
+    color: white;
+    font-size: 14px;
+    height: 40px;
+    padding: 10px 20px;
+    line-height: 1;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: solid 1px #409EFF;
+}
+
+button.button-primary[disabled] {
+    background: #a0cfff;
+    cursor: not-allowed;
+}
+
+.switch-button {
+    display: inline-block;
+	width: 50px;
+	height: 22px;
+	background: #e0e0e0;
+	border-radius: 22px;
+	transition: background 0.3s ease;
+	cursor: pointer;
+}
+
+.switch-button .switch-button-bar {
+	height: 18px;
+	width: 18px;
+	border: solid 2px #e0e0e0;
+	background: white;
+	border-radius: 100%;
+	transition: all 0.3s ease;
+}
+
+.switch-button.on {
+	background: #409eff;
+}
+
+.switch-button.on .switch-button-bar {
+	border-color: #409eff;
+	margin-left: calc(100% - 22px);
+}
+
+.text.mini-text {
+    font-size: 12px;
+    line-height: 22px;
+    color: #888;
+    display: inline-block;
+}
+
+.paginate a.button {
+    border: solid 1px #e0e0e0;
+    line-height: 30px;
+    height: 30px;
+    font-size: 12px;
+    color: #555;
+    display: inline-block;
+    padding: 0 12px;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+
+.paginate a.button:hover {
+   border-color: #ddd;
+}
