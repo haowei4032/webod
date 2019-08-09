@@ -88,7 +88,7 @@ function getPdo($release = null)
  */
 function getRequest()
 {
-    return Request::getInstance();
+    return Request::getInstance(null);
 }
 
 /**
@@ -97,7 +97,7 @@ function getRequest()
  */
 function getLogger()
 {
-    return Logger::getInstance();
+    return Logger::getInstance(null);
 }
 
 /**
@@ -106,7 +106,7 @@ function getLogger()
  */
 function getHash()
 {
-    return HashAgent::getInstance();
+    return HashAgent::getInstance(null);
 }
 
 /**

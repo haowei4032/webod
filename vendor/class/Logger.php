@@ -4,7 +4,7 @@ class Logger extends Facade
 {
     private $stack = [];
 
-    protected function init()
+    protected function init(...$argv)
     {
 
     }

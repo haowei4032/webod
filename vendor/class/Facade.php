@@ -15,7 +15,7 @@ abstract class Facade
 
     /**
      * @param mixed ...$argv
-     * @return Facade
+     * @return mixed
      */
     public static function getInstance(...$argv)
     {
