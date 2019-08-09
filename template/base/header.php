@@ -3,11 +3,11 @@
         <div class="left-side clear-fix">
             <a class="logo" href="<?=Url::getInstance()->to('/')?>"></a>
             <ul class="menu-list clear-fix">
-                <li><a class="current" href="index.php?section=posts">主题</a></li>
-                <li><a href="index.php?section=article">文章</a></li>
-                <li><a href="index.php?section=picture">图片</a></li>
-                <li><a href="index.php?section=share">分享</a></li>
-                <li><a href="index.php?section=book">书籍</a></li>
+                <li><a <?=getRequest()->has('section', 'posts') ? 'class="current" ':''?>href="index.php?section=posts">主题</a></li>
+                <li><a <?=getRequest()->has('section', 'article') ? 'class="current" ':''?>href="index.php?section=article">文章</a></li>
+                <li><a <?=getRequest()->has('section', 'picture') ? 'class="current" ':''?>href="index.php?section=picture">图片</a></li>
+                <li><a <?=getRequest()->has('section', 'share') ? 'class="current" ':''?>href="index.php?section=share">分享</a></li>
+                <li><a <?=getRequest()->has('section', 'book') ? 'class="current" ':''?>href="index.php?section=book">书籍</a></li>
             </ul>
         </div>
         <div class="right-side">

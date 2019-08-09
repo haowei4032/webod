@@ -7,8 +7,14 @@ class Request extends Facade
         // TODO: Implement init() method.
     }
 
-    public function has($name)
+    /**
+     * @param $name
+     * @param null $value
+     * @return bool
+     */
+    public function has($name, $value = null)
     {
+        if (!is_null($value)) return isset($_REQUEST[$name]) && ($_REQUEST[$name] === $value);
         return isset($_REQUEST[$name]);
     }
 
