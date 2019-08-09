@@ -14,7 +14,7 @@ checkProvider();
 <!doctype html>
 <html lang="zh-cn">
 <head>
-<title><?=getHash()->getString('seo.title')?> - Powered by Webod</title>
+<title><?=getHash()->getString('seo.title', 'Webod 2.0 预览版')?> - Powered by Webod</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=9">
 <meta name="keywords" content="<?=getHash()->get('seo.keywords')?>">
