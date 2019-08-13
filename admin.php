@@ -13,12 +13,12 @@ $section = getRequest()->getString('section', 'index');
 <!doctype html>
 <html lang="zh-cn">
 <head>
-<title><?=getHash()->getString('seo.title')?> - 后台管理 - Powered by Webod</title>
+<title><?=getHash()->getString('seo.title', 'Webod 2.0 预览版')?> - 后台管理 - Powered by Webod</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=9">
 <meta name="keywords" content="<?=getHash()->get('seo.keywords')?>">
 <meta name="description" content="<?=getHash()->get('seo.description')?>">
-<link rel="shortcut icon" href="<?=Url::getInstance()->to('/favicon.ico')?>" type="image/x-icon">
+<link rel="shortcut icon" href="<?=Url::getInstance()->to('/favicon.png')?>" type="image/x-icon">
 <link type="text/css" rel="stylesheet" href="<?=Url::getInstance()->assets('css/admin.css')?>">
 <?=Ui::css('//at.alicdn.com/t/font_1321177_37ljb6iqnko.css')?>
 </head>

@@ -3,10 +3,6 @@
 defined('__ROOT__') or define('__ROOT__', __DIR__);
 require __ROOT__ . '/vendor/function.php';
 
-/*getHash()->set('seo.title', 'Webod 2.0 预览版', true);
-getHash()->set('seo.keywords', '我是关键词', true);
-getHash()->set('seo.description', '我是描述', true);*/
-
 //检查提供者
 checkProvider();
 
@@ -19,7 +15,7 @@ checkProvider();
 <meta http-equiv="X-UA-Compatible" content="IE=9">
 <meta name="keywords" content="<?=getHash()->get('seo.keywords')?>">
 <meta name="description" content="<?=getHash()->get('seo.description')?>">
-<link rel="shortcut icon" href="<?=Url::getInstance()->to('/favicon.ico')?>" type="image/x-icon">
+<link rel="shortcut icon" href="<?=Url::getInstance()->to('/favicon.png')?>" type="image/x-icon">
 <link type="text/css" rel="stylesheet" href="<?=Url::getInstance()->assets('css/base.css')?>">
 </head>
 

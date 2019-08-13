@@ -3,11 +3,6 @@
 defined('__ROOT__') or define('__ROOT__', __DIR__);
 require __ROOT__ . '/vendor/function.php';
 
-function getBuildInfo()
-{
-    return BuildConfig::VERSION_CODE . '_' . BuildConfig::VERSION . '_' . BuildConfig::VERSION_LANGUAGE . '_build_' . BuildConfig::BUILD_DATE;
-}
-
 addJsonResponse('action=prepareInstall', function ($request) {
 
     $link = mysqli_init();
@@ -32,7 +27,7 @@ $step = getRequest()->getInt('step', $defaultValue = 1, $minValue = 1);
 <title>Webod 2.0 预览版 - 安装向导 - Powered by Webod</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=9">
-<link rel="shortcut icon" href="<?= Url::getInstance()->to('/favicon.ico') ?>" type="image/x-icon">
+<link rel="shortcut icon" href="<?= Url::getInstance()->to('/favicon.png') ?>" type="image/x-icon">
 <link type="text/css" rel="stylesheet" href="<?= Url::getInstance()->assets('css/base.css') ?>">
 <link type="text/css" rel="stylesheet" href="<?= Url::getInstance()->assets('css/install.css') ?>">
 </head>
@@ -42,7 +37,7 @@ $step = getRequest()->getInt('step', $defaultValue = 1, $minValue = 1);
     <div class="header clear-fix">
         <span class="logo"></span>
         <span class="text"><small title="预览版">Preview</small>安装向导</span>
-        <span class="build">版本号： <?= getBuildInfo() ?></span>
+        <span class="build">版本号： <?= BuildConfig::getBuildInfo() ?></span>
     </div>
     <div class="steps-bar">
         <div class="item<?= $step > 1 ? ' finish' : ' current' ?>">
