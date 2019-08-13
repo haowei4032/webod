@@ -42,4 +42,9 @@ class ArrayList implements Iterator, Countable {
     {
         return count($this->array);
     }
+
+    public function isEmpty()
+    {
+        return !$this->count();
+    }
 }

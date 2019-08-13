@@ -9,7 +9,8 @@ if (version_compare(PHP_VERSION, '5.4.0', '<')) exit('The PHP version is too low
 spl_autoload_register(function ($class) {
 
     $loader = [
-        'model\\HashModel' => __ROOT__ . '/model/HashModel.php'
+        'model\\HashModel' => __ROOT__ . '/model/HashModel.php',
+        'model\\PostsModel' => __ROOT__ . '/model/PostsModel.php',
     ];
 
     if (isset($loader[$class])) {

@@ -6,7 +6,7 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
-var_dump( \model\PostsModel::getInstance()->get() );
+var_dump( \model\PostsModel::getInstance()->get()->isEmpty() );
 
 ?>
 <!doctype html>
