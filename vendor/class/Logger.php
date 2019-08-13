@@ -29,6 +29,7 @@ class Logger extends Facade
             isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '-',
             isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '-',
             isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '-',
+            isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '-',
             $level,
             $tag,
             $message
