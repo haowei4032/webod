@@ -313,6 +313,39 @@ class Model extends Facade implements ArrayAccess
     }
 
     /**
+     * @param int $page_size
+     * @return array
+     */
+    public function paginate($page_size)
+    {
+        $page = getRequest()->getInt('page', 1, 1);
+        $page -= 1;
+        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit {offset}, {page_size}', [
+            '{field}' => $this->fields,
+            '{tableName}' => $this->tableName,
+            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1,
+            '{offset}' => $page * $page_size,
+            '{page_size}' => intval($page_size)
+        ]);
+        DB::pushQueryLog($this);
+        $sth = getPdo()->prepare($this->buildSql);
+        $sth->execute($this->whereParameter);
+        $result = $sth->fetchAll();
+        $this->reset();
+        $list = new ArrayList();
+        foreach ($result as $next => $rows) {
+            $object = clone $this;
+            foreach ($rows as $k => $v) $object->_attributes[$k] = $v;
+            $list->append($object);
+        }
+        return [
+            'page' => $page,
+            'page_size' => $page_size,
+            'list' => $list
+        ];
+    }
+
+    /**
      * @param string $field
      * @return mixed
      */
