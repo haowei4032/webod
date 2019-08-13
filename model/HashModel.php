@@ -1,7 +1,6 @@
 <?php
 
 namespace model;
-
 use Model;
 
 class HashModel extends Model
@@ -27,4 +26,5 @@ class HashModel extends Model
         }
         return parent::setAttribute($name, $value);
     }
+
 }

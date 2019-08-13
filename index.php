@@ -6,9 +6,7 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
-var_dump( model\HashModel::getInstance()->count() , DB::getQueryLog() );
-exit;
-
+var_dump( \model\PostsModel::getInstance()->get() );
 
 ?>
 <!doctype html>
