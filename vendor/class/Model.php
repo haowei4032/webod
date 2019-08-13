@@ -368,7 +368,7 @@ class Model extends Facade implements ArrayAccess
      */
     public function count()
     {
-        $this->buildSql = strtr('select count(1) from `{tableName}` where {where} limit 1', [
+        $this->buildSql = strtr('select count(*) from `{tableName}` where {where} limit 1', [
             '{tableName}' => $this->tableName,
             '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
         ]);
