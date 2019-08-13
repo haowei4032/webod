@@ -364,6 +364,23 @@ class Model extends Facade implements ArrayAccess
     }
 
     /**
+     * @return int
+     */
+    public function count()
+    {
+        $this->buildSql = strtr('select count(1) from `{tableName}` where {where} limit 1', [
+            '{tableName}' => $this->tableName,
+            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
+        ]);
+        DB::pushQueryLog($this);
+        $sth = getPdo()->prepare($this->buildSql);
+        $sth->execute($this->whereParameter);
+        $value = $sth->fetchColumn();
+        $this->reset();
+        return intval($value);
+    }
+
+    /**
      * @return mixed
      */
     public function first()
