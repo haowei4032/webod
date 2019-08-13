@@ -101,7 +101,6 @@ class Model extends Facade implements ArrayAccess
     {
         /*if ($this->whereGroup) $this->whereGroup[] = 'and';*/
         if (!$this->subWhere) if ($this->whereGroup) $this->whereGroup[] = 'and';
-        var_dump($this->subWhere);
 
         if (is_array($condition)) {
             $whereGroup = [];
@@ -119,7 +118,6 @@ class Model extends Facade implements ArrayAccess
         } elseif (!is_string($condition) && is_callable($condition)) {
             $this->subWhere = [];
             call_user_func($condition, $this);
-            var_dump($this->subWhere);
             $this->whereGroup[] = '(' . implode(' and ', $this->subWhere) . ')';
             $this->subWhere = null;
         } else {
@@ -329,6 +327,38 @@ class Model extends Facade implements ArrayAccess
         $sth = getPdo()->prepare($this->buildSql);
         $sth->execute($this->whereParameter);
         $value = $sth->fetchColumn();
+        $this->reset();
+        return $value;
+    }
+
+    /**
+     * @param string|array $field
+     * @return int|array|null
+     */
+    public function sum($field)
+    {
+        $retType = 'int';
+        if (is_array($field)) {
+            $retType = 'array';
+            $fieldDup = [];
+            foreach ($field as $v) $fieldDup[] = 'SUM(`' . $v . '`) as `' . $v . '`';
+            $field = implode(',', $fieldDup);
+        } else {
+            $field = 'SUM(`' . $field . '`) as `' . $field . '`';
+        }
+        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit 1', [
+            '{field}' => $field,
+            '{tableName}' => $this->tableName,
+            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
+        ]);
+        DB::pushQueryLog($this);
+        $sth = getPdo()->prepare($this->buildSql);
+        $sth->execute($this->whereParameter);
+        if ($retType === 'array') {
+            $value = $sth->fetch();
+        } else {
+            $value = $sth->fetchColumn();
+        }
         $this->reset();
         return $value;
     }
