@@ -7,6 +7,7 @@ class Model extends Facade implements ArrayAccess
 
     private $_attributes = null;
     private $fields = '*';
+    private $limit = null;
 
     private $subWhere = null;
     private $whereGroup = [];
@@ -74,6 +75,14 @@ class Model extends Facade implements ArrayAccess
     }
 
     /**
+     * @return array|null
+     */
+    public function toArray()
+    {
+        return $this->_attributes;
+    }
+
+    /**
      * @param $name
      * @return mixed|null
      */
@@ -91,7 +100,6 @@ class Model extends Facade implements ArrayAccess
         if (is_array($select)) $this->fields = implode(',', $select);
         return $this;
     }
-
 
     /**
      * @param mixed $condition
@@ -288,15 +296,26 @@ class Model extends Facade implements ArrayAccess
     }
 
     /**
+     * @param int ...$num
+     * @return $this
+     */
+    public function limit(...$num)
+    {
+        $this->limit = implode(',', func_get_args());
+        return $this;
+    }
+
+    /**
      * @return ArrayList
      */
     public function get()
     {
-        $this->buildSql = strtr('select {field} from `{tableName}` where {where}', [
+        $this->buildSql = trim(strtr('select {field} from `{tableName}` where {where} {limit}', [
             '{field}' => $this->fields,
             '{tableName}' => $this->tableName,
-            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
-        ]);
+            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1,
+            '{limit}' => $this->limit ? 'limit ' . $this->limit : ''
+        ]));
         DB::pushQueryLog($this);
         $sth = getPdo()->prepare($this->buildSql);
         $sth->execute($this->whereParameter);
@@ -320,13 +339,14 @@ class Model extends Facade implements ArrayAccess
     {
         $page = getRequest()->getInt('page', 1, 1);
         $page -= 1;
-        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit {offset}, {page_size}', [
+        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit {offset}, {page_size}', $input = [
             '{field}' => $this->fields,
             '{tableName}' => $this->tableName,
             '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1,
             '{offset}' => $page * $page_size,
             '{page_size}' => intval($page_size)
         ]);
+        $this->limit = implode(',', [$input['offset'], $input['page_size']]);
         DB::pushQueryLog($this);
         $sth = getPdo()->prepare($this->buildSql);
         $sth->execute($this->whereParameter);
@@ -366,7 +386,7 @@ class Model extends Facade implements ArrayAccess
 
     /**
      * @param string|array $field
-     * @return int|array|null
+     * @return mixed
      */
     public function sum($field)
     {
@@ -392,6 +412,76 @@ class Model extends Facade implements ArrayAccess
         } else {
             $value = $sth->fetchColumn();
         }
+        $this->reset();
+        return $value;
+    }
+
+    /**
+     * @param array|string $field
+     * @return mixed
+     */
+    public function avg($field)
+    {
+        $retType = 'int';
+        if (is_array($field)) {
+            $retType = 'array';
+            $fieldDup = [];
+            foreach ($field as $v) $fieldDup[] = 'AVG(`' . $v . '`) as `' . $v . '`';
+            $field = implode(',', $fieldDup);
+        } else {
+            $field = 'AVG(`' . $field . '`) as `' . $field . '`';
+        }
+        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit 1', [
+            '{field}' => $field,
+            '{tableName}' => $this->tableName,
+            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
+        ]);
+        DB::pushQueryLog($this);
+        $sth = getPdo()->prepare($this->buildSql);
+        $sth->execute($this->whereParameter);
+        if ($retType === 'array') {
+            $value = $sth->fetch();
+        } else {
+            $value = $sth->fetchColumn();
+        }
+        $this->reset();
+        return $value;
+    }
+
+    /**
+     * @param $field
+     * @return mixed
+     */
+    public function max($field)
+    {
+        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit 1', [
+            '{field}' => 'MAX(`' . $field . '`) as `' . $field . '`',
+            '{tableName}' => $this->tableName,
+            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
+        ]);
+        DB::pushQueryLog($this);
+        $sth = getPdo()->prepare($this->buildSql);
+        $sth->execute($this->whereParameter);
+        $value = $sth->fetchColumn();
+        $this->reset();
+        return $value;
+    }
+
+    /**
+     * @param $field
+     * @return mixed
+     */
+    public function min($field)
+    {
+        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit 1', [
+            '{field}' => 'MIN(`' . $field . '`) as `' . $field . '`',
+            '{tableName}' => $this->tableName,
+            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
+        ]);
+        DB::pushQueryLog($this);
+        $sth = getPdo()->prepare($this->buildSql);
+        $sth->execute($this->whereParameter);
+        $value = $sth->fetchColumn();
         $this->reset();
         return $value;
     }

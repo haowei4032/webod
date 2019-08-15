@@ -1,11 +1,16 @@
 <?php
 
-class ArrayList implements Iterator, Countable {
-    
+class ArrayList implements Iterator, Countable
+{
+
     private $position = 0;
     private $array = [];
 
-    public function __construct() {
+    /**
+     * ArrayList constructor.
+     */
+    public function __construct()
+    {
         $this->position = 0;
     }
 
@@ -15,36 +20,74 @@ class ArrayList implements Iterator, Countable {
     public function append(...$value)
     {
         foreach (func_get_args() as $v)
-        array_push($this->array, $v);
+            array_push($this->array, $v);
     }
 
-    public function rewind() {
+    /**
+     * @return void
+     */
+    public function rewind()
+    {
         $this->position = 0;
     }
 
-    public function current() {
+    /**
+     * @return mixed
+     */
+    public function current()
+    {
         return $this->array[$this->position];
     }
 
-    public function key() {
+    /**
+     * @return int|mixed
+     */
+    public function key()
+    {
         return $this->position;
     }
 
-    public function next() {
+    /**
+     * @return void
+     */
+    public function next()
+    {
         ++$this->position;
     }
 
-    public function valid() {
+    /**
+     * @return bool
+     */
+    public function valid()
+    {
         return isset($this->array[$this->position]);
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return count($this->array);
     }
 
+    /**
+     * @return bool
+     */
     public function isEmpty()
     {
         return !$this->count();
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        foreach ($this->array as $k => $v) {
+            if ($v instanceof Model) $v = $v->toArray();
+            $this->array[$k] = $v;
+        }
+        return $this->array ;
     }
 }

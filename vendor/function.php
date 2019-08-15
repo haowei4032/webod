@@ -8,13 +8,9 @@ if (version_compare(PHP_VERSION, '5.4.0', '<')) exit('The PHP version is too low
 
 spl_autoload_register(function ($class) {
 
-    $loader = [
-        'model\\HashModel' => __ROOT__ . '/model/HashModel.php',
-        'model\\PostsModel' => __ROOT__ . '/model/PostsModel.php',
-    ];
-
-    if (isset($loader[$class])) {
-        $file = $loader[$class];
+    $group = explode('\\', $class);
+    if (count($group) > 1 && in_array(current($group), ['model', 'models'])) {
+        $file = __ROOT__ . '/' . implode(DIRECTORY_SEPARATOR, $group) . '.php';
         if (!is_file($file)) throw new ErrorException('No such file "' . $file . '"');
         require_once $file;
         return;
@@ -23,6 +19,7 @@ spl_autoload_register(function ($class) {
     $file = __ROOT__ . '/vendor/' . ($class === 'BuildConfig' ? 'BuildConfig' : 'class/' . $class) . '.php';
     if (!is_file($file)) throw new ErrorException('No such file "' . $file . '"');
     require_once $file;
+
 }, true);
 
 register_shutdown_function(function () {

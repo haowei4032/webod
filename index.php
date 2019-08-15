@@ -6,7 +6,11 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
-var_dump( \model\PostsModel::getInstance()->paginate(100) );
+use model\HashModel;
+var_dump(HashModel::getInstance()->get()->toArray());
+var_dump( DB::getQueryLog() );
+exit;
+
 
 ?>
 <!doctype html>
