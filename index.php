@@ -7,9 +7,10 @@ require __ROOT__ . '/vendor/function.php';
 checkProvider();
 
 use model\HashModel;
-var_dump(HashModel::getInstance()->get()->toArray());
-var_dump( DB::getQueryLog() );
-exit;
+
+var_dump( HashModel::getInstance()->where('key', '!=', 'seo.title')->paginate(10) );
+
+exit(0);
 
 
 ?>

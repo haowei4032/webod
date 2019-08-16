@@ -1,6 +1,6 @@
 <?php
 
-class ArrayList implements Iterator, Countable
+class ArrayList implements Iterator, Countable, Serializable
 {
 
     private $position = 0;
@@ -88,6 +88,23 @@ class ArrayList implements Iterator, Countable
             if ($v instanceof Model) $v = $v->toArray();
             $this->array[$k] = $v;
         }
-        return $this->array ;
+        return $this->array;
+    }
+
+    /**
+     * @return false|string
+     */
+    public function serialize()
+    {
+        return json_encode($this->toArray(), JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * @param mixed $serialized
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        $this->array = json_decode($serialized, true);
     }
 }

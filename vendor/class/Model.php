@@ -152,9 +152,13 @@ class Model extends Facade implements ArrayAccess
         return $this;
     }
 
+    /**
+     * @param string $operator
+     * @return string
+     */
     private function formatOperator($operator)
     {
-        switch ($operator[1]) {
+        switch ($operator) {
             case 'lt':
             case '$lt':
                 return '<';
@@ -174,7 +178,6 @@ class Model extends Facade implements ArrayAccess
             case 'neq':
             case '$ne':
             case '$neq':
-            case '!=':
                 return '<>';
             default:
                 return $operator;
@@ -332,25 +335,25 @@ class Model extends Facade implements ArrayAccess
     }
 
     /**
-     * @param int $page_size
+     * @param int $pageSize
      * @return array
      */
-    public function paginate($page_size)
+    public function paginate($pageSize)
     {
         $page = getRequest()->getInt('page', 1, 1);
-        $page -= 1;
-        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit {offset}, {page_size}', $input = [
+        $this->buildSql = strtr('select {field} from `{tableName}` where {where} limit {offset}, {pageSize}', $input = [
             '{field}' => $this->fields,
             '{tableName}' => $this->tableName,
             '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1,
-            '{offset}' => $page * $page_size,
-            '{page_size}' => intval($page_size)
+            '{offset}' => ($page - 1) * $pageSize,
+            '{pageSize}' => intval($pageSize)
         ]);
-        $this->limit = implode(',', [$input['offset'], $input['page_size']]);
+        $this->limit = implode(',', [$input['{offset}'], $input['{pageSize}']]);
         DB::pushQueryLog($this);
         $sth = getPdo()->prepare($this->buildSql);
         $sth->execute($this->whereParameter);
         $result = $sth->fetchAll();
+        $total = $this->count();
         $this->reset();
         $list = new ArrayList();
         foreach ($result as $next => $rows) {
@@ -359,9 +362,10 @@ class Model extends Facade implements ArrayAccess
             $list->append($object);
         }
         return [
+            'total' => $total,
             'page' => $page,
-            'page_size' => $page_size,
-            'list' => $list
+            'page_size' => $pageSize,
+            'list' => $list->toArray()
         ];
     }
 
