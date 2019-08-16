@@ -113,7 +113,7 @@ class Model extends Facade implements ArrayAccess
         if (is_array($condition)) {
             $whereGroup = [];
             $fields = array_keys($condition);
-            for ($i = 0; $i < (counts($fields) - 1); $i++) {
+            for ($i = 0; $i < (count($fields) - 1); $i++) {
                 $operator = [
                     '`' . $fields[$i] . '`',
                     '=',
@@ -195,7 +195,7 @@ class Model extends Facade implements ArrayAccess
         if (is_array($condition)) {
             $whereGroup = [];
             $fields = array_keys($condition);
-            for ($i = 0; $i < (counts($fields) - 1); $i++) {
+            for ($i = 0; $i < (count($fields) - 1); $i++) {
                 $operator = [
                     '`' . $fields[$i] . '`',
                     '=',
