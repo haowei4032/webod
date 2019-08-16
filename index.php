@@ -6,12 +6,6 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
-use model\HashModel;
-
-var_dump( HashModel::getInstance()->where('key', '!=', 'seo.title')->paginate(10) );
-
-exit(0);
-
 
 ?>
 <!doctype html>

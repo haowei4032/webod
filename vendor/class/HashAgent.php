@@ -67,12 +67,16 @@ class HashAgent extends Facade
     }
 
     /**
-     *
+     * @param int $length
      * @return string
      */
-    public function random()
+    public function random($length = 32)
     {
-        return md5(microtime(true));
+        $str = md5(microtime(true));
+        if ($length < 1 || $length > 32) return $str;
+        $str = str_split($str, 1);
+        shuffle($str);
+        return substr(implode($str), 0, $length);
     }
 
     /**
