@@ -153,6 +153,18 @@ class Model extends Facade implements ArrayAccess
     }
 
     /**
+     * @param string $className
+     * @param string $localKey
+     * @param string $foreignKey
+     * @return mixed
+     */
+    public function hasMany($className, $localKey, $foreignKey)
+    {
+        $singleInstance = call_user_func([$className, 'getInstance']);
+        return $singleInstance->where($foreignKey, $this->_attributes[$localKey])->get();
+    }
+
+    /**
      * @param string $operator
      * @return string
      */

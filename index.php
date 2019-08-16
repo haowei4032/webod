@@ -6,7 +6,6 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
-
 ?>
 <!doctype html>
 <html lang="zh-cn">
