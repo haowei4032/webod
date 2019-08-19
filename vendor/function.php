@@ -116,7 +116,7 @@ function getMenu($type = null)
 {
     return ModelAgent::getInstance()->setTableName('$menu')->where(function (Model $query) use ($type) {
         if (!is_null($type)) $query->where('type', intval($type));
-    })->get()->toArray();
+    })->get();
 }
 
 /**
