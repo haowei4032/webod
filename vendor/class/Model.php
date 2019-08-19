@@ -158,6 +158,29 @@ abstract class Model extends Facade implements ArrayAccess
      * @param string $foreignKey
      * @return mixed
      */
+    public function belongsTo($className, $localKey, $foreignKey)
+    {
+
+    }
+
+    /**
+     * @param string $className
+     * @param string $localKey
+     * @param string $foreignKey
+     * @return mixed
+     */
+    public function hasOne($className, $localKey, $foreignKey)
+    {
+        $singleInstance = call_user_func([$className, 'getInstance']);
+        return $singleInstance->where($foreignKey, $this->_attributes[$localKey])->first();
+    }
+
+    /**
+     * @param string $className
+     * @param string $localKey
+     * @param string $foreignKey
+     * @return mixed
+     */
     public function hasMany($className, $localKey, $foreignKey)
     {
         $singleInstance = call_user_func([$className, 'getInstance']);
@@ -364,20 +387,14 @@ abstract class Model extends Facade implements ArrayAccess
         DB::pushQueryLog($this);
         $sth = getPdo()->prepare($this->buildSql);
         $sth->execute($this->whereParameter);
-        $result = $sth->fetchAll();
+        $list = $sth->fetchAll();
         $total = $this->count();
         $this->reset();
-        $list = new ArrayList();
-        foreach ($result as $next => $rows) {
-            $object = clone $this;
-            foreach ($rows as $k => $v) $object->_attributes[$k] = $v;
-            $list->append($object);
-        }
         return [
             'total' => $total,
             'page' => $page,
             'page_size' => $pageSize,
-            'list' => $list->toArray()
+            'list' => $list
         ];
     }
 
