@@ -366,7 +366,7 @@ abstract class Model extends Facade implements ArrayAccess
             $list->putItem($object);
         }
         //call_user_func_array([$list, 'append'], $result);
-        //$this->reset();
+        $this->reset();
         return $list;
     }
 
