@@ -19,7 +19,7 @@ class HashAgent extends Facade
     public function load(...$argv)
     {
         if (getPdo()) {
-            foreach (ModelAgent::getInstance()->setTableName('$hash')->get() as $k => $rows) {
+            foreach ((new ModelAgent('$hash'))->get() as $k => $rows) {
                 $this->history[$rows->key] = $rows->value;
                 $this->set($rows->key, $rows->value, true);
             }
@@ -57,7 +57,7 @@ class HashAgent extends Facade
         DB::beginTransaction();
         foreach ($this->map as $key => $value) {
             if (isset($this->history[$key]) && $this->history[$key] === $value) continue;
-            ModelAgent::getInstance()->setTableName('$hash')->where('key', $key)->updateOrNew([
+            (new ModelAgent('$hash'))->where('key', $key)->updateOrNew([
                 'key' => $key,
                 'value' => $value,
                 'create_time' => time()

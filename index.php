@@ -6,10 +6,12 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
-$user = new \model\UserModel();
-$user->id = 1;
-$user->save();
-
+$agent = getModel('wd_hash');
+$agent->key = 'seo.url';
+$agent->value = 'http://webod.cn/';
+$agent->create_time = time();
+$agent->save();
+var_dump($agent);
 
 exit;
 

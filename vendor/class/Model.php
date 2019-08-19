@@ -7,6 +7,7 @@ abstract class Model implements ArrayAccess
     private $buildSql = null;
 
     private $_attributes = null;
+    private $_prepareAttributes = null;
     private $fields = '*';
     private $limit = null;
 
@@ -22,16 +23,17 @@ abstract class Model implements ArrayAccess
      */
     public function getAttribute($name, $value)
     {
-        return $value;
+        return isset($this->_attributes[$name]) ? $value : null;
     }
 
     /**
      * @param $name
      * @param $value
-     * @return mixed
+     * @return Model
      */
     public function setAttribute($name, $value)
     {
+        $this->_attributes[$name] = $value;
         return $value;
     }
 
@@ -85,6 +87,12 @@ abstract class Model implements ArrayAccess
     public function __get($name)
     {
         return isset($this->_attributes[$name]) ? $this->getAttribute($name, $this->_attributes[$name]) : null;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->_prepareAttributes[$name] = $value;
+        return $this;
     }
 
     /**
@@ -575,6 +583,26 @@ abstract class Model implements ArrayAccess
     }
 
     /**
+     * @param bool $check
+     * @return bool
+     */
+    public function save($check = false)
+    {
+        if (!$this->_attributes) {
+            return $this->insert($this->_prepareAttributes);
+        } else {
+            if (isset($this->primaryKey, $this->_attributes[$this->primaryKey])) {
+                return $this->where($this->primaryKey, $this->_attributes[$this->primaryKey])->update($this->_prepareAttributes);
+            } else {
+                foreach ($this->_attributes as $key => $value) {
+                    $this->where($key, $value);
+                }
+                return $this->update($this->_prepareAttributes);
+            }
+        }
+    }
+
+    /**
      * @return bool
      */
     public function exist()
@@ -683,13 +711,18 @@ abstract class Model implements ArrayAccess
 
     public function reset()
     {
-        $this->_attributes = null;
-        $this->fields = '*';
+        if ($this->_prepareAttributes) {
+            $this->_attributes  = array_merge($this->_attributes, $this->_prepareAttributes);
+            $this->_prepareAttributes = null;
+        } else {
+            $this->_attributes = null;
+            $this->fields = '*';
 
-        $this->subWhere = null;
-        $this->whereGroup = [];
-        $this->whereParameter = [];
-        //$this->lastInsertId = null;
+            $this->subWhere = null;
+            $this->whereGroup = [];
+            $this->whereParameter = [];
+            //$this->lastInsertId = null;
+        }
     }
 
     public function __destruct()
