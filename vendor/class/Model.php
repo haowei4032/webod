@@ -1,6 +1,6 @@
 <?php
 
-abstract class Model extends Facade implements ArrayAccess
+abstract class Model implements ArrayAccess
 {
     protected $primaryKey = null;
     protected $tableName = null;
@@ -14,11 +14,6 @@ abstract class Model extends Facade implements ArrayAccess
     private $whereGroup = [];
     private $whereParameter = [];
     private $lastInsertId = null;
-
-    protected function init(...$argv)
-    {
-        return true;
-    }
 
     /**
      * @param $name
@@ -430,7 +425,7 @@ abstract class Model extends Facade implements ArrayAccess
             '{tableName}' => $this->tableName,
             '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
         ]);
-        DB::pushQueryLog($this);
+
         $sth = getPdo()->prepare($this->buildSql);
         $sth->execute($this->whereParameter);
         $value = $sth->fetchColumn();

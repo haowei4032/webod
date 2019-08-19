@@ -2,9 +2,14 @@
 
 class ModelAgent extends Model
 {
+    public function __construct($tableName)
+    {
+        call_user_func_array([$this, 'setTableName'], func_get_args());
+    }
+
     /**
      * @param string $tableName
-     * @return Model
+     * @return mixed
      */
     public function setTableName($tableName)
     {
@@ -18,4 +23,5 @@ class ModelAgent extends Model
         $this->primaryKey = DB::getPrimaryKey($this->tableName);
         return $this;
     }
+
 }
