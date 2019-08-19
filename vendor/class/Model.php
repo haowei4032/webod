@@ -644,17 +644,16 @@ abstract class Model extends Facade implements ArrayAccess
     }
 
     /**
-     * @param array $data
      * @return bool
      */
-    public function delete(array $data)
+    public function delete()
     {
         $this->buildSql = strtr('delete from `{tableName}` where {where}', [
             '{tableName}' => $this->tableName,
             '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1
         ]);
         DB::pushQueryLog($this);
-        $bool = getPdo()->prepare($this->buildSql)->execute(array_merge(array_values($data), $this->whereParameter));
+        $bool = getPdo()->prepare($this->buildSql)->execute($this->whereParameter);
         $this->reset();
         return $bool;
     }

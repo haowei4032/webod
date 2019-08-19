@@ -17,6 +17,20 @@ class DB extends Facade
         self::$queryLog = [];
     }
 
+    /**
+     * @param string $sql
+     * @param array $input
+     * @return bool
+     */
+    public static function exec($sql, $input = null)
+    {
+        if (!getPdo()) return false;
+        return getPdo()->prepare($sql)->execute($input);
+    }
+
+    /**
+     * @param Model $model
+     */
     public static function pushQueryLog(Model $model)
     {
         self::$queryLog[] = $model->getBuildSql();
