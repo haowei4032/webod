@@ -1,6 +1,6 @@
 <?php
 
-class Model extends Facade implements ArrayAccess
+abstract class Model extends Facade implements ArrayAccess
 {
     protected $tableName = null;
     private $buildSql = null;
@@ -16,7 +16,7 @@ class Model extends Facade implements ArrayAccess
 
     protected function init(...$argv)
     {
-        // TODO: Implement init() method.
+        return true;
     }
 
     /**

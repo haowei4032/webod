@@ -8,6 +8,6 @@ class UserModel extends \Model
 
     public function getPosts()
     {
-        $this->hasMany(PostsModel::class, 'user_id', 'user_id');
+        return $this->hasMany(PostsModel::class, 'user_id', 'user_id');
     }
 }

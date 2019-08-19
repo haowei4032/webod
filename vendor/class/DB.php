@@ -30,11 +30,6 @@ class DB extends Facade
         return self::$queryLog;
     }
 
-    public static function getProxyConnection()
-    {
-
-    }
-
     /**
      * @return bool
      */

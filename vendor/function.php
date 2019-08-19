@@ -5,6 +5,7 @@ defined('DEBUG') or define('DEBUG', 0);
 defined('LOG_LEVEL') or define('LOG_LEVEL', 0);
 
 if (version_compare(PHP_VERSION, '5.4.0', '<')) exit('The PHP version is too low');
+if (is_file(__ROOT__ . '/data/config.php')) require_once __ROOT__ . '/data/config.php';
 
 spl_autoload_register(function ($class) {
 
@@ -66,7 +67,6 @@ function getPdo($release = null)
     }
     if ($pdo) return $pdo;
     try {
-        if (is_file(__ROOT__ . '/data/config.php')) require_once __ROOT__ . '/data/config.php';
         $dsn = 'mysql:dbname=' . getConstant('DB_DATABASE') . ';host=' . getConstant('DB_HOST') . ';port=' . getConstant('DB_PORT');
         $pdo = new PDO($dsn, getConstant('DB_USER'), getConstant('DB_PASSWORD'), [
             PDO::MYSQL_ATTR_INIT_COMMAND => 'set names ' . getConstant('DB_CHARACTER'),
@@ -105,6 +105,18 @@ function getLogger()
 function getHash()
 {
     return HashAgent::getInstance(null);
+}
+
+/**
+ * 获取菜单
+ * @param int $type
+ * @return array|null
+ */
+function getMenu($type = null)
+{
+    return ModelAgent::getInstance()->setTableName('$menu')->where(function (Model $query) use ($type) {
+        if (!is_null($type)) $query->where('type', intval($type));
+    })->get()->toArray();
 }
 
 /**

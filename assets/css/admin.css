@@ -25,7 +25,7 @@ html, body {
 }
 
 .page-wrapper .left-side {
-    width: 210px;
+    width: 170px;
     background: #222;
     box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
     position: relative;
@@ -58,7 +58,7 @@ html, body {
     height: 42px;
     display: block;
     padding: 0 15px;
-    font-size: 14px;
+    font-size: 12px;
     box-sizing: border-box;
     border-left: solid 3px transparent;
 }
