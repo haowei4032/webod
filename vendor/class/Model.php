@@ -358,7 +358,7 @@ abstract class Model extends Facade implements ArrayAccess
         DB::pushQueryLog($this);
         $sth = getPdo()->prepare($this->buildSql);
         $sth->execute($this->whereParameter);
-        while(($rows = $sth->fetch()) !== false) {
+        while (($rows = $sth->fetch()) !== false) {
             foreach ($rows as $k => $v) $this->_attributes[$k] = $v;
             yield $this;
         }
