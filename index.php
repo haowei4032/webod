@@ -6,7 +6,9 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
-var_dump( ModelAgent::getInstance()->setTableName('$hash')->get()->toArray() );
+var_dump( ModelAgent::getInstance()->setTableName('$hash')->where(function(Model $query) {
+    $query->where('key', '<>', 'seo.title');
+})->get()->getItem(0) );
 exit;
 
 ?>

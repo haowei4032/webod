@@ -359,14 +359,14 @@ abstract class Model extends Facade implements ArrayAccess
         $sth = getPdo()->prepare($this->buildSql);
         $sth->execute($this->whereParameter);
         $result = $sth->fetchAll();
-        $this->reset();
         $list = new ArrayList();
         foreach ($result as $next => $rows) {
             $object = clone $this;
             foreach ($rows as $k => $v) $object->_attributes[$k] = $v;
-            $list->append($object);
+            $list->putItem($object);
         }
         //call_user_func_array([$list, 'append'], $result);
+        //$this->reset();
         return $list;
     }
 

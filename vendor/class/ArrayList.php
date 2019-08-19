@@ -15,12 +15,22 @@ class ArrayList implements Iterator, Countable, Serializable
     }
 
     /**
-     * @param mixed ...$value
+     * @param int $key
+     * @return mixed|null
      */
-    public function append(...$value)
+    public function getItem($key)
     {
-        foreach (func_get_args() as $v)
-            array_push($this->array, $v);
+        return isset($this->array[$key]) ? $this->array[$key] : null;
+    }
+
+    /**
+     * @param mixed $item
+     * @return ArrayList
+     */
+    public function putItem($item)
+    {
+        array_push($this->array, $item);
+        return $this;
     }
 
     /**
