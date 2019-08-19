@@ -1,5 +1,6 @@
 <?php
 
+$startMs = round(microtime(1) * 1000);
 ob_start();
 defined('DEBUG') or define('DEBUG', 0);
 defined('LOG_LEVEL') or define('LOG_LEVEL', 0);
@@ -24,9 +25,11 @@ spl_autoload_register(function ($class) {
 }, true);
 
 register_shutdown_function(function () {
+    global $startMs;
     getHash()->save();
     getPdo($release = true);
     echo ob_get_clean();
+    var_dump(round(microtime(1) * 1000) - $startMs);
     saveLogger();
 });
 

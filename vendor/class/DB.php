@@ -23,6 +23,22 @@ class DB extends Facade
     }
 
     /**
+     * @param string $tableName
+     * @return mixed|null
+     */
+    public static function getPrimaryKey($tableName)
+    {
+        if (!getPdo()) return null;
+        try {
+            $sth = getPdo()->prepare('show fields from `' . $tableName . '` where `Key` = ?');
+            $sth->execute(['PRI']);
+        } catch (PDOException $ex) {
+            return null;
+        }
+        return $sth->fetchColumn();
+    }
+
+    /**
      * @return array
      */
     public static function getQueryLog()

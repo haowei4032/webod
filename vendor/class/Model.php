@@ -2,6 +2,7 @@
 
 abstract class Model extends Facade implements ArrayAccess
 {
+    protected $primaryKey = null;
     protected $tableName = null;
     private $buildSql = null;
 
@@ -169,7 +170,7 @@ abstract class Model extends Facade implements ArrayAccess
      * @param string $foreignKey
      * @return mixed
      */
-    public function hasOne($className, $localKey, $foreignKey)
+    public function hasOne($className, $localKey = null, $foreignKey = null)
     {
         $singleInstance = call_user_func([$className, 'getInstance']);
         return $singleInstance->where($foreignKey, $this->_attributes[$localKey])->first();
@@ -181,7 +182,7 @@ abstract class Model extends Facade implements ArrayAccess
      * @param string $foreignKey
      * @return mixed
      */
-    public function hasMany($className, $localKey, $foreignKey)
+    public function hasMany($className, $localKey = null, $foreignKey = null)
     {
         $singleInstance = call_user_func([$className, 'getInstance']);
         return $singleInstance->where($foreignKey, $this->_attributes[$localKey])->get();

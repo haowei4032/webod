@@ -6,6 +6,9 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
+var_dump( ModelAgent::getInstance()->setTableName('$hash')->get()->toArray() );
+exit;
+
 ?>
 <!doctype html>
 <html lang="zh-cn">

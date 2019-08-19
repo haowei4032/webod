@@ -15,6 +15,7 @@ class ModelAgent extends Model
         } else {
             $this->tableName = $tableName;
         }
+        $this->primaryKey = DB::getPrimaryKey($this->tableName);
         return $this;
     }
 }
