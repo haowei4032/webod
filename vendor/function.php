@@ -123,6 +123,16 @@ function getMenu($type = null)
 }
 
 /**
+ * 获取模型
+ * @param string $tableName
+ * @return mixed
+ */
+function getModel($tableName)
+{
+    return ModelAgent::getInstance()->setTableName($tableName);
+}
+
+/**
  * 写入日志
  * @return mixed
  */
