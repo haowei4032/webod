@@ -345,6 +345,26 @@ abstract class Model extends Facade implements ArrayAccess
     }
 
     /**
+     * @return Generator
+     */
+    public function getForIterator()
+    {
+        $this->buildSql = trim(strtr('select {field} from `{tableName}` where {where} {limit}', [
+            '{field}' => $this->fields,
+            '{tableName}' => $this->tableName,
+            '{where}' => $this->whereGroup ? implode(' and ', $this->whereGroup) : 1,
+            '{limit}' => $this->limit ? 'limit ' . $this->limit : ''
+        ]));
+        DB::pushQueryLog($this);
+        $sth = getPdo()->prepare($this->buildSql);
+        $sth->execute($this->whereParameter);
+        while(($rows = $sth->fetch()) !== false) {
+            foreach ($rows as $k => $v) $this->_attributes[$k] = $v;
+            yield $this;
+        }
+    }
+
+    /**
      * @return ArrayList
      */
     public function get()

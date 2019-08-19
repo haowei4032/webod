@@ -19,13 +19,59 @@ class DB extends Facade
 
     /**
      * @param string $sql
-     * @param array $input
+     * @param array|null $input
      * @return bool
      */
     public static function exec($sql, $input = null)
     {
         if (!getPdo()) return false;
         return getPdo()->prepare($sql)->execute($input);
+    }
+
+    /**
+     * @param string $sql
+     * @param array|null $input
+     * @return mixed
+     */
+    public static function queryForResult($sql, $input = null)
+    {
+        if (!getPdo()) return null;
+        $sth = getPdo()->prepare($sql);
+        $sth->execute($input);
+        $sth->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Hash');
+        return $sth->fetch();
+    }
+
+    /**
+     * @param string $sql
+     * @param array|null $input
+     * @return mixed|null
+     */
+    public static function queryForList($sql, $input = null)
+    {
+        if (!getPdo()) return null;
+        $sth = getPdo()->prepare($sql);
+        $sth->execute($input);
+        $list = new ArrayList();
+        while(($rows = $sth->fetch()) !== false) {
+            $list->putItem($rows);
+        }
+        return $list;
+    }
+
+    /**
+     * @param string $sql
+     * @param array|null $input
+     * @return Generator|null
+     */
+    public static function queryForIterator($sql, $input = null)
+    {
+        if (!getPdo()) return null;
+        $sth = getPdo()->prepare($sql);
+        $sth->execute($input);
+        while(($rows = $sth->fetch()) !== false) {
+            yield $rows;
+        }
     }
 
     /**

@@ -6,9 +6,9 @@ require __ROOT__ . '/vendor/function.php';
 //检查提供者
 checkProvider();
 
-ModelAgent::getInstance()->setTableName('$hash')->where('id', 1)->delete();
-
-DB::exec();
+foreach (ModelAgent::getInstance()->setTableName('$hash')->getForIterator() as $rows) {
+    var_dump($rows->key);
+}
 
 exit;
 
